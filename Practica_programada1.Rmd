@@ -1,0 +1,25 @@
+---
+title: "Practica_programada1"
+author: "Joseline Portuguez L"
+date: "2023-07-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(readr)
+library(readxl)
+library(tidyr)
+library(janitor) 
+library(lubridate)
+library(hms)
+```
+
+```{r}
+datos_netflix<- “https://raw.githubusercontent.
+com/isa229/programacion_analisis_datos_ii/main/netflix_info.csv”
+
+datos_netinfo <-read_csv2(datos_netflix)
+```
+
