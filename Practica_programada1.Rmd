@@ -17,9 +17,16 @@ library(hms)
 ```
 
 ```{r}
-datos_netflix<- “https://raw.githubusercontent.
-com/isa229/programacion_analisis_datos_ii/main/netflix_info.csv”
-
-datos_netinfo <-read_csv2(datos_netflix)
+#A
+datos_netflix_info <-read_csv2("https://raw.githubusercontent.com/isa229/programacion_analisis_datos_ii/main/netflix_info.csv")
 ```
+
+```{r}
+#B
+columnas_limpias <- datos_netflix_info |> 
+  clean_names("ID","Tipo","Titulo","Director","Pais","Fecha_agregacion","Año_lanzamiento","Clasificacion","Duracion","Categoria")
+
+
+```
+
 
