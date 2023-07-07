@@ -151,7 +151,7 @@ datos_TV_M2020 <- datos_netflix_info |>
 ```
 
 ```{r}
-Respuesta: Peliculas fueron 93
+Respuesta: Peliculas fueron 93 
            TV Shows fueron 44
 
 ```
