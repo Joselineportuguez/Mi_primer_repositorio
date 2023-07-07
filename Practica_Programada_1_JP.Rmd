@@ -1,30 +1,55 @@
 ---
-title: "Practica_Programada_1_JP"
+title: "Practica_programada1"
 author: "Joseline Portuguez L"
-date: "2023-07-07"
+date: "2023-07-06"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(readr)
+library(readxl)
+library(tidyr)
+library(janitor) 
+library(lubridate)
+library(hms)
 ```
 
-## R Markdown
+A.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+datos_netflix_info <-read_csv2("https://raw.githubusercontent.com/isa229/programacion_analisis_datos_ii/main/netflix_info.csv")
 ```
 
-## Including Plots
+B. Ajuste los nombres de las columnas para que estén en español.
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+datos_netflix_info <- datos_netflix_info |> 
+  rename("ID"="show_id","Tipo"="type","Titulo"="title","Director"="director","Pais"="country","Fecha_agregacion"="date_added","Año_lanzamiento"="release_year","Clasificacion"="rating","Duracion"="duration","Categoria"="listed_in")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+C. Elimine filas duplicadas.
+
+```{r}
+datos_netflix_info <- datos_netflix_info |> 
+distinct()
+```
+
+```{r}
+filas_duplicadas <- datos_netflix_info |>  
+  janitor::get_dupes()
+```
+
+D. Eliminar filas y columnas vacías.
+
+```{r}
+datos_netflix_info <- datos_netflix_info|> 
+  remove_empty(which = c("rows", "cols"))
+```
+
+E. Elimine la variable correspondiente al año de lanzamiento (release_year.)
+
+```{r}
+datos_netflix_info <- select(datos_netflix_info, -Año_lanzamiento)
+```
