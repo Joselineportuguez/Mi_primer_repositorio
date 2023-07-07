@@ -114,7 +114,8 @@ datos_netflix_info <- datos_netflix_info |>
 
 I. Cuántas películas y shows de TV hay por país?
 ```{r}
-datos_tipo_pais <- datos_netflix_info |> count(Pais, Tipo, name="count")
+datos_tipo_pais <- datos_netflix_info |> 
+count(Pais, Tipo, name="count")
 ```
 
 J. Cuáles son los 10 directores con mayor cantidad de películas (sin contar shows de TV) en Netflix?
@@ -123,7 +124,8 @@ Ordénelos por orden descendente.
 ```{r}
 datos_top_10 <- datos_netflix_info |>
   filter(Tipo=="Movie") |>
-  arrange(desc(Director)) |> 
+  count(Director, Tipo) |>
+  arrange(desc(n)) |> 
   head(10)
 ```
 
@@ -133,12 +135,24 @@ Ordénelos por orden descendente.
 ```{r}
 datos_top_10_TV <- datos_netflix_info |>
   filter(Tipo=="TV Show") |>
-  arrange(desc(Director)) |> 
+  count(Director, Tipo) |>
+  arrange(desc(n)) |> 
   head(10)
 ```
 
 L. Obtenga la lista de películas y shows de TV que se añadieron en marzo del año 2020. Cuántos fueron?
 
 ```{r}
+datos_pelis_M2020 <- datos_netflix_info |>
+  filter(Tipo =="Movie", Año == 2020, Mes == 3)
+
+datos_TV_M2020 <- datos_netflix_info |>
+  filter(Tipo =="TV Show", Año == 2020, Mes == 3)
+```
+
+```{r}
+Respuesta: Peliculas fueron 93
+           TV Shows fueron 44
 
 ```
+
