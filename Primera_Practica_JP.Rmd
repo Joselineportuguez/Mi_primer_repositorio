@@ -85,3 +85,42 @@ datos_netflix_info <- datos_netflix_info |>
          Categoria = replace_na(Categoria, "Sin información"))
 ```
 
+H. Añada a su conjunto de datos una nueva columna llamada anyo que indique el año en que el show o
+película fue añadido a Netflix. Añada también una columna llamada mes que indique el mes en que el
+show o película fue añadido a Netflix.
+
+```{r}
+datos_netflix_info <- datos_netflix_info |> 
+  mutate(Fecha_agregacion = mdy(Fecha_agregacion))
+```
+
+
+```{r}
+datos_netflix_info <- datos_netflix_info |>                              
+  mutate(Año = year(Fecha_agregacion))
+```
+
+
+```{r}
+datos_netflix_info <- datos_netflix_info |>                              
+  mutate(Mes = month(Fecha_agregacion))
+```
+
+I. Cuántas películas y shows de TV hay por país?
+
+```{r}
+datos_tipo_pais <- datos_netflix_info |> 
+count(Pais, Tipo, name="count")
+```
+
+J. Cuáles son los 10 directores con mayor cantidad de películas (sin contar shows de TV) en Netflix?
+Ordénelos por orden descendente.
+
+```{r}
+datos_top_10 <- datos_netflix_info |>
+  filter(Tipo=="Movie") |>
+  count(Director, Tipo) |>
+  arrange(desc(n)) |> 
+  head(10)
+```
+
