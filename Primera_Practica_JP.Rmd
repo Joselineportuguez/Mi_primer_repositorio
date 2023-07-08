@@ -1,0 +1,153 @@
+---
+title: "Primera_Practica_JP"
+author: "Joseline Portuguez L"
+date: "2023-07-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(readr)
+library(readxl)
+library(tidyr)
+library(janitor) 
+library(lubridate)
+library(hms)
+```
+
+A.
+
+```{r}
+datos_netflix_info <-read_csv2("https://raw.githubusercontent.com/isa229/programacion_analisis_datos_ii/main/netflix_info.csv")
+```
+
+B. Ajuste los nombres de las columnas para que estén en español.
+
+```{r}
+datos_netflix_info <- datos_netflix_info |> 
+  rename("ID"="show_id","Tipo"="type","Titulo"="title","Director"="director","Pais"="country","Fecha_agregacion"="date_added","Año_lanzamiento"="release_year","Clasificacion"="rating","Duracion"="duration","Categoria"="listed_in")
+```
+
+C. Elimine filas duplicadas.
+
+```{r}
+datos_netflix_info <- datos_netflix_info |> 
+distinct()
+```
+
+D. Eliminar filas y columnas vacías.
+
+```{r}
+datos_netflix_info <- datos_netflix_info|> 
+  remove_empty(which = c("rows", "cols"))
+```
+
+E. Elimine la variable correspondiente al año de lanzamiento (release_year.)
+
+```{r}
+datos_netflix_info <- select(datos_netflix_info, -Año_lanzamiento)
+```
+
+F. Haga una inspección de las variables type y country para determinar si hay observaciones mal escritas o escritas de diferentes maneras. Si es ahí, haga la limpieza para poder homogenizar esos datos.
+
+```{r}
+datos_netflix_info <- datos_netflix_info  |>
+  mutate(across(c(Tipo), function(x) ifelse(x == "movie", "Movie", x))) |>
+  mutate(across(c(Tipo), function(x) ifelse(x == "tv show", "TV Show", x))) |>
+  mutate(across(c(Tipo), function(x) ifelse(x == "Movi", "Movie", x))) |> 
+  mutate(across(c(Tipo), function(x) ifelse(x == "TV SHOW", "TV Show", x)))
+```
+
+```{r}
+datos_netflix_info <- datos_netflix_info  |>
+  mutate(Pais = ifelse(Pais == "united states", "United States", Pais)) |> 
+  mutate(Pais = ifelse(Pais == "india", "India", Pais)) |> 
+  mutate(pais = ifelse(Pais == "pakistan", "Pakistan", Pais)) |> 
+  mutate(pais = ifelse(Pais == "canada", "Canada", Pais))
+```
+
+```{r}
+datos_netflix_info <- select(datos_netflix_info, -pais)
+```
+
+G. Para todas las columnas de tipo carácter, en donde haya NA, coloque “Sin información”.
+
+```{r}
+datos_netflix_info <- datos_netflix_info |> 
+  mutate(Tipo = replace_na(Tipo, "Sin información"),
+         Titulo = replace_na(Titulo, "Sin información"),
+         Director = replace_na(Director, "Sin información"),
+         Pais = replace_na(Pais, "Sin información"),
+         Fecha_agregacion = replace_na(Fecha_agregacion, "Sin información"),
+         Clasificacion = replace_na(Clasificacion, "Sin información"),
+         Duracion = replace_na(Duracion, "Sin información"),
+         Categoria = replace_na(Categoria, "Sin información"))
+```
+
+H. Añada a su conjunto de datos una nueva columna llamada anyo que indique el año en que el show o
+película fue añadido a Netflix. Añada también una columna llamada mes que indique el mes en que el
+show o película fue añadido a Netflix.
+
+```{r}
+datos_netflix_info <- datos_netflix_info |> 
+  mutate(Fecha_agregacion = mdy(Fecha_agregacion))
+```
+
+
+```{r}
+datos_netflix_info <- datos_netflix_info |>                              
+  mutate(Año = year(Fecha_agregacion))
+```
+
+
+```{r}
+datos_netflix_info <- datos_netflix_info |>                              
+  mutate(Mes = month(Fecha_agregacion))
+```
+
+I. Cuántas películas y shows de TV hay por país?
+
+```{r}
+datos_tipo_pais <- datos_netflix_info |> 
+count(Pais, Tipo, name="count")
+```
+
+J. Cuáles son los 10 directores con mayor cantidad de películas (sin contar shows de TV) en Netflix?
+Ordénelos por orden descendente.
+
+```{r}
+datos_top_10 <- datos_netflix_info |>
+  filter(Tipo=="Movie") |>
+  count(Director, Tipo) |>
+  arrange(desc(n)) |> 
+  head(10)
+```
+
+K. Cuáles son los 10 directores con mayor cantidad de shows de TV (sin contar películas) en Netflix?
+Ordénelos por orden descendente.
+
+```{r}
+datos_top_10_TV <- datos_netflix_info |>
+  filter(Tipo=="TV Show") |>
+  count(Director, Tipo) |>
+  arrange(desc(n)) |> 
+  head(10)
+```
+
+L. Obtenga la lista de películas y shows de TV que se añadieron en marzo del año 2020. Cuántos fueron?
+
+```{r}
+datos_pelis_M2020 <- datos_netflix_info |>
+  filter(Tipo =="Movie", Año == 2020, Mes == 3)
+
+datos_TV_M2020 <- datos_netflix_info |>
+  filter(Tipo =="TV Show", Año == 2020, Mes == 3)
+```
+
+
+```{r}
+Respuesta: Peliculas fueron 93 
+           TV Shows fueron 44
+```
+
