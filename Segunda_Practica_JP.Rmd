@@ -161,5 +161,23 @@ los datos de una categoría de AQI. (Es decir una pestaña para las ciudades cuy
 o “Buena”, otra para los que la categoría es “Moderate” y así para cada cateoría) 
 
 ```{r}
-
+air_excel <- list(
+  "Good" = air_quality_date |> 
+    filter(AQI_Category == "Good"),
+  
+  "Unhealthy for Sensitive Groups" = air_quality_date |> 
+    filter(AQI_Category == "Unhealthy for Sensitive Groups"),
+  
+  "Moderate" = air_quality_date |> 
+    filter(AQI_Category == "Moderate"),
+  
+  "Unhealthy" = air_quality_date |> 
+    filter(AQI_Category == "Unhealthy"),
+  
+  "Very Unhealthy" = air_quality_date |> 
+    filter(AQI_Category == "Very Unhealthy"),
+  
+  "Hazardous" = air_quality_date |> 
+    filter(AQI_Category == "Hazardous")
+)
 ```
