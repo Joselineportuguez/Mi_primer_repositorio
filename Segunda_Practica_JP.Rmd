@@ -7,24 +7,63 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(readr)
+library(readxl)
+library(tidyr)
+library(janitor) 
+library(lubridate)
+library(gt)
+library(datasets)
+library(stringr)
+library(writexl) 
+library(utils)
+library(RSQLite) 
+library(DBI)
+library(leaflet)
+library(ggplot2)
+library(plotly)
+
+
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+A.
+```{r}
+air_quality <-read_csv("https://raw.githubusercontent.com/isa229/programacion_analisis_datos_ii/main/air_quality_index.csv")
 ```
 
-## Including Plots
+B.Cuántas categorías diferentes de AQI (AQI Category) hay en este conjunto de datos? Cuáles son?
+```{r}
+categorias <- air_quality  |> distinct(AQUIcategory)
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+C.Cree una tabla que indique la cantidad de ciudades que hay en cada categoría de AQI (AQI Category).
+Adicionalmente, traduzca las categorías a español, por ejemplo “Good” sería “Bueno”. Presente esta
+tabla con el paquete gt, añadiendo títulos y subtítulos
+```{r}
+
+```
+
+D.Obtenga el promedio del AQI Value por país, y cree 2 tablas: Una que muestre los 10 países con los
+valores más bajos de AQI, y otra que muestre los 10 países con los valores más altos de AQI. Presente
+estas tablas con el paquete gt, añadiendo títulos y subtítulos
+```{r}
+
+```
+
+E.Para los 10 países con los valores promedios más altos de AQI, muestrelos en un mapa de leaflet usando
+addMarkers o un addCircles. En el popup debe colocar el valor promedio del AQI
+```{r}
+
+```
+
+F.Escriba el código que exporte los datos en un excel, de tal manera que cada pestaña tenga solamente
+los datos de una categoría de AQI. (Es decir una pestaña para las ciudades cuya categoría es “Good”
+o “Buena”, otra para los que la categoría es “Moderate” y así para cada cateoría)
+```{r}
+
+```
+
+
