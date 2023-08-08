@@ -178,6 +178,6 @@ air_excel <- list(
     filter(AQI_Category == "Very Unhealthy"),
   
   "Hazardous" = air_quality_date |> 
-    filter(AQI_Category == "Hazardous")
+    filter(AQI_Category == "Hazardous") 
 )
 ```
