@@ -18,7 +18,6 @@ library(gt)
 library(leaflet)
 library(writexl)
 
-
 ```
 
 A.
@@ -162,24 +161,5 @@ los datos de una categoría de AQI. (Es decir una pestaña para las ciudades cuy
 o “Buena”, otra para los que la categoría es “Moderate” y así para cada cateoría) 
 
 ```{r}
-air_excel <- list(
-  "Good" = datos_air |> 
-    filter(AQI_Category == "Good"),
-  
-  "Unhealthy for Sensitive Groups" = datos_air |> 
-    filter(AQI_Category == "Unhealthy for Sensitive Groups"),
-  
-  "Moderate" = datos_air |> 
-    filter(AQI_Category == "Moderate"),
-  
-  "Unhealthy" = datos_air |> 
-    filter(AQI_Category == "Unhealthy"),
-  
-  "Very Unhealthy" = datos_air |> 
-    filter(AQI_Category == "Very Unhealthy"),
-  
-  "Hazardous" = datos_air |> 
-    filter(AQI_Category == "Hazardous")
-)
 
 ```
