@@ -30,7 +30,7 @@ ui <- fluidPage(
       width = 7,
       br(),
       br(),
-      h2(span("Vamos a planificar su día especial!", style = "color:blue")),
+      h2(span("Vamos a planificar su día especial!", style = "color:blue"), align = "center"),
       tags$hr(style="border-color: blue;"),
       h3("Detalles del evento:"),
       br(),
