@@ -25,23 +25,37 @@ ui <- fluidPage(
                   label = "Provincia:", 
                   choices = c("San José", "Cartago", "Heredia", "Aljuela", "Limon", "Puntarenas", "Guanacaste"),
                   multiple = FALSE),
-      ),
-      mainPanel(
-        width = 7,
-        br(),
-        br(),
-        h2(span("Vamos a planificar su día especial!", style = "color:blue"), align = "center"),
-        tags$hr(style="border-color: blue;"),
-        h3("Detalles del evento:"),
-        br(),
-        textOutput("Nombre del evento"),
-        br(),
-        textOutput("Tema del evento"),
-        textOutput("Número de invitados y ubicación"),
-      )
+    ),
+    mainPanel(
+      width = 7,
+      br(),
+      br(),
+      h2(span("Vamos a planificar su día especial!", style = "color:blue")),
+      tags$hr(style="border-color: blue;"),
+      h3("Detalles del evento:"),
+      br(),
+      textOutput("Nombre del evento"),
+      br(),
+      textOutput("Tema del evento"),
+      textOutput("Número de invitados y ubicación"),
     )
   )
+)
 
-server <- function(input, output, session) {
-} 
+server <- function(input, output, session) { 
+  output$Nombre_del_evento<- renderText({paste0("Nombre del evento:", 
+                                                input$Nombre_del_evento, ".")
+    
+  })
+  
+  output$Tema_del_evento<- renderText({paste0("Tema del evento:", 
+                                              input$Tema_del_evento, ".")
+    
+  })    
+  
+  output$Número_de_invitados<- renderText({paste0("Número de invitados y ubicación:", 
+                                                  input$Número_de_invitados,".", Provincia,".")
+    
+  })  
+}
 shinyApp(ui, server)
