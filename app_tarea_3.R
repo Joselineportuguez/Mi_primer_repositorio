@@ -16,7 +16,7 @@ ui <- fluidPage(
                   multiple = FALSE),
       br(),
       numericInput(inputId = "Número_de_invitados", 
-                   label = "Número de invitados:", 
+                   label = "Número de invitados:",  
                    value = 25, 
                    min = 25, 
                    max = 120
